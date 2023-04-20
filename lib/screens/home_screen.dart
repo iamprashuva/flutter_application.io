@@ -1,6 +1,9 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/task_screen.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,8 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = new DateTime.now();
+    DateTime date = new DateTime(
+        now.year, now.month, now.day, now.hour, now.minute, now.second);
+
     return Scaffold(
-      backgroundColor: Colors.grey.shade300,
+      backgroundColor: Colors.green.shade100,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -28,29 +35,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 const Text(
                   "Good Afternoon!!",
                   style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     fontSize: 24,
                   ),
                 ),
-                const Padding(
+
+                Padding(
                   padding: EdgeInsets.only(top: 20.0),
                   child: Text(
-                    "It's Tuesday, 28th Mar 2023",
+                    date.toString(),
                     style: TextStyle(
                       fontSize: 20,
                     ),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
+                  padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
                   child: TextFormField(
                     controller: _formData,
                     decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey.shade200,
                       border: OutlineInputBorder(),
                       hintText: "Enter a item",
                     ),
                   ),
                 ),
-                TextButton(
+                ElevatedButton(
                   onPressed: () {
                     //textValue = _formData.text;
                     // MAP
@@ -73,12 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     var item = todoList[index];
                     return Container(
                       margin: const EdgeInsets.only(top: 20.0),
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 10.0,
-                        horizontal: 6.0,
-                      ),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Colors.grey.shade200,
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                       child: Row(
@@ -101,7 +109,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () {
                                 print("tap");
                                 Get.to(
-                                  TaskScreen(),
+                                  TaskScreen(
+                                    title: item['task'],
+                                  ),
                                   transition: Transition.zoom,
                                 );
                                 // Navigator.push(
